@@ -1,0 +1,13 @@
+<main class="flex min-h-screen h-screen lg:flex-row">
+  <div class="lg:w-[50%] h-full flex flex-col justify-center lg:px-32 w-[90%] mx-auto">
+    <router-outlet />
+  </div>
+  <div class="hidden lg:flex lg:w-[50%] h-full relative">
+    <img
+      src="student_gradient.png"
+      alt="auth-bg"
+      class="w-full h-full absolute inset-0 object-cover"
+    />
+    <img src="student_auth.png" alt="auth-img" class="z-10 object-contain" />
+  </div>
+</main>

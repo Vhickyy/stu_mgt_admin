@@ -1,0 +1,20 @@
+<div class="flex flex-col gap-2 w-full">
+  @if (label()) {
+    <label for="email" class="font-semibold text-sm text-text">{{ label() }}</label>
+  }
+  <div class="border-border border p-2 rounded-lg flex items-center gap-3">
+    @if (leftIcon()) {
+      <app-icon [name]="leftIcon()!" class="w-4 h-4 text-gray-400" />
+    }
+    <input
+      [type]="type()"
+      [id]="label() ? id() : ''"
+      [placeholder]="placeholder()"
+      [formField]="field()"
+      class="w-full outline-none text-text text-sm"
+    />
+    @if (rightIcon()) {
+      <app-icon [name]="rightIcon()!" class="w-4 h-4 text-gray-400" />
+    }
+  </div>
+</div>

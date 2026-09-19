@@ -1,0 +1,60 @@
+<div class="fixed inset-0 flex items-center justify-center p-4 z-50">
+  <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" (click)="cancel.emit()"></div>
+
+  <section
+    class="relative bg-surface rounded-2xl shadow-xl w-full max-w-sm p-6 space-y-5 text-center"
+  >
+    <div
+      [class]="'w-14 h-14 rounded-full flex items-center justify-center mx-auto ' + iconWrapClass()"
+    >
+      <!-- <svg [lucideIcon]="iconData" [size]="26"></svg> -->
+    </div>
+
+    <div class="space-y-1.5">
+      <app-text variant="sectionTitle" [text]="title()" class="text-base" />
+      <p class="font-body text-sm text-muted">{{ description() }}</p>
+    </div>
+
+    @if (showReasonField()) {
+      <div class="text-left space-y-1.5">
+        <app-text variant="cardLabel" text="Reason (Optional)" />
+        <!-- <textarea
+          [(ngModel)]="reasonText"
+          rows="3"
+          placeholder="Enter reason for deactivation"
+          class="w-full border border-border rounded-xl px-3 py-2 text-sm font-body outline-none focus:border-primary resize-none"
+        ></textarea> -->
+      </div>
+    }
+
+    @if (requireTypedConfirmation(); as required) {
+      <div class="text-left space-y-1.5">
+        <app-text variant="cardLabel" [text]="'Type ' + required + ' to confirm'" />
+        <!-- <input
+          [(ngModel)]="typedConfirmation"
+          [placeholder]="required"
+          class="w-full border border-border rounded-xl px-3 py-2 text-sm font-body outline-none focus:border-primary"
+        /> -->
+      </div>
+    }
+
+    <div class="flex gap-3 pt-1">
+      <button
+        (click)="cancel.emit()"
+        class="flex-1 border border-border rounded-xl py-2.5 text-sm font-medium font-body text-text hover:bg-background"
+      >
+        Cancel
+      </button>
+      <button
+        (click)="onConfirm()"
+        [disabled]="!canConfirm()"
+        [class]="
+          'flex-1 rounded-xl py-2.5 text-sm font-medium font-body text-white disabled:opacity-40 disabled:cursor-not-allowed ' +
+          confirmButtonClass()
+        "
+      >
+        {{ confirmLabel() }}
+      </button>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,119 @@
+@switch (variant()) {
+  <!-- GLOBAL -->
+  @case ("hero") {
+    <h1 [class]="classes()" [innerHTML]="text()"></h1>
+  }
+  @case ("heading") {
+    <h2 [class]="classes()" [innerHTML]="text()"></h2>
+  }
+  @case ("subheading") {
+    <h3 [class]="classes()" [innerHTML]="text()"></h3>
+  }
+
+  <!-- DASHBOARD LAYOUT -->
+  @case ("pageTitle") {
+    <h2 [class]="classes()" [innerHTML]="text()"></h2>
+  }
+  @case ("pageSubtitle") {
+    <p [class]="classes()" [innerHTML]="text()"></p>
+  }
+  @case ("sectionTitle") {
+    <h3 [class]="classes()" [innerHTML]="text()"></h3>
+  }
+  @case ("sectionAction") {
+    <span [class]="classes()" [innerHTML]="text()"></span>
+  }
+
+  <!-- DASHBOARD CARDS -->
+  @case ("cardTitle") {
+    <h4 [class]="classes()" [innerHTML]="text()"></h4>
+  }
+  @case ("cardValue") {
+    <h4 [class]="classes()" [innerHTML]="text()"></h4>
+  }
+  @case ("cardLabel") {
+    <p [class]="classes()" [innerHTML]="text()"></p>
+  }
+  @case ("cardTrend") {
+    <p [class]="classes()" [innerHTML]="text()"></p>
+  }
+  @case ("cardText") {
+    <p [class]="classes()" [innerHTML]="text()"></p>
+  }
+
+  <!-- DASHBOARD TABLES -->
+  @case ("tableHeader") {
+    <span [class]="classes()" [innerHTML]="text()"></span>
+  }
+  @case ("tableCell") {
+    <span [class]="classes()" [innerHTML]="text()"></span>
+  }
+  @case ("tableCellMuted") {
+    <span [class]="classes()" [innerHTML]="text()"></span>
+  }
+
+  <!-- DASHBOARD LISTS -->
+  @case ("listTitle") {
+    <p [class]="classes()" [innerHTML]="text()"></p>
+  }
+  @case ("listSubtitle") {
+    <p [class]="classes()" [innerHTML]="text()"></p>
+  }
+  @case ("listMeta") {
+    <p [class]="classes()" [innerHTML]="text()"></p>
+  }
+  @case ("listValue") {
+    <p [class]="classes()" [innerHTML]="text()"></p>
+  }
+
+  <!-- DASHBOARD BADGES & LABELS -->
+  @case ("badge") {
+    <span [class]="classes()" [innerHTML]="text()"></span>
+  }
+  @case ("tag") {
+    <span [class]="classes()" [innerHTML]="text()"></span>
+  }
+
+  <!-- DASHBOARD HERO BANNER -->
+  @case ("bannerTitle") {
+    <h2 [class]="classes()" [innerHTML]="text()"></h2>
+  }
+  @case ("bannerSubtitle") {
+    <p [class]="classes()" [innerHTML]="text()"></p>
+  }
+  @case ("bannerStat") {
+    <p [class]="classes()" [innerHTML]="text()"></p>
+  }
+  @case ("bannerStatLabel") {
+    <p [class]="classes()" [innerHTML]="text()"></p>
+  }
+
+  <!-- DASHBOARD CHARTS -->
+  @case ("chartValue") {
+    <p [class]="classes()" [innerHTML]="text()"></p>
+  }
+  @case ("chartLabel") {
+    <p [class]="classes()" [innerHTML]="text()"></p>
+  }
+  @case ("chartGrowth") {
+    <p [class]="classes()" [innerHTML]="text()"></p>
+  }
+
+  <!-- DASHBOARD MISC -->
+  @case ("timestamp") {
+    <span [class]="classes()" [innerHTML]="text()"></span>
+  }
+  @case ("emptyState") {
+    <p [class]="classes()" [innerHTML]="text()"></p>
+  }
+  @case ("navLabel") {
+    <span [class]="classes()" [innerHTML]="text()"></span>
+  }
+  @case ("navSection") {
+    <span [class]="classes()" [innerHTML]="text()"></span>
+  }
+
+  @default {
+    <p [class]="classes()" [innerHTML]="text()"></p>
+  }
+}

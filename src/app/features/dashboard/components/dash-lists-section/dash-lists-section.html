@@ -1,0 +1,70 @@
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+  <!-- Top Schools -->
+  <div class="bg-surface border border-border rounded-2xl p-5">
+    <div class="flex items-center justify-between mb-4">
+      <app-text variant="sectionTitle" text="Top Schools / Universities" />
+      <app-text variant="sectionAction" text="View all" />
+    </div>
+    <div class="space-y-3">
+      @for (school of topSchools; track school.name) {
+        <div class="flex items-center justify-between gap-3">
+          <span class="font-body text-sm text-text w-32 sm:w-40 truncate">{{ school.name }}</span>
+          <div class="flex-1 h-1.5 bg-background rounded-full overflow-hidden">
+            <div class="h-full bg-primary rounded-full" [style.width.%]="school.pct"></div>
+          </div>
+          <span class="font-body text-xs text-muted w-10 text-right shrink-0">{{
+            school.users
+          }}</span>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Top Departments -->
+  <div class="bg-surface border border-border rounded-2xl p-5">
+    <div class="flex items-center justify-between mb-4">
+      <app-text variant="sectionTitle" text="Top Departments" />
+      <app-text variant="sectionAction" text="View all" />
+    </div>
+    <div class="space-y-3">
+      @for (dept of topDepartments; track dept.name) {
+        <div class="flex items-center justify-between gap-3">
+          <span class="font-body text-sm text-text w-28 sm:w-36 truncate">{{ dept.name }}</span>
+          <div class="flex-1 h-1.5 bg-background rounded-full overflow-hidden">
+            <div class="h-full bg-purple rounded-full" [style.width.%]="dept.pct"></div>
+          </div>
+          <span class="font-body text-xs text-muted w-10 text-right shrink-0">{{
+            dept.users
+          }}</span>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Recent Activity -->
+  <div class="bg-surface border border-border rounded-2xl p-5">
+    <div class="flex items-center justify-between mb-4">
+      <app-text variant="sectionTitle" text="Recent User Activity" />
+      <app-text variant="sectionAction" text="View all" />
+    </div>
+    <div class="space-y-4">
+      @for (item of activity; track item.name) {
+        <div class="flex items-center gap-3">
+          <img
+            src="https://i.pravatar.cc/32?u={{ item.name }}"
+            class="w-8 h-8 rounded-full object-cover shrink-0"
+            alt=""
+          />
+          <div class="flex-1 min-w-0 leading-tight">
+            <p class="font-body text-sm font-semibold text-text truncate">{{ item.name }}</p>
+            <p class="font-body text-xs text-muted truncate">{{ item.action }}</p>
+          </div>
+          <div class="flex items-center gap-1.5 shrink-0">
+            <span class="font-body text-[11px] text-muted whitespace-nowrap">{{ item.time }}</span>
+            <span [class]="'w-1.5 h-1.5 rounded-full ' + item.dot"></span>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

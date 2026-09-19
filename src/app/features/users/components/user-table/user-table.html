@@ -1,0 +1,119 @@
+<!-- Table card -->
+<div class="bg-surface border border-border rounded-2xl overflow-hidden">
+  <!-- Search -->
+  <div class="p-4 border-b border-border">
+    <div
+      class="flex items-center gap-2 bg-background border border-border rounded-xl px-4 py-2.5 max-w-md"
+    >
+      <app-icon name="search" />
+      <input
+        type="text"
+        placeholder="Search users..."
+        [value]="globalFilter()"
+        (input)="globalFilter.set($any($event.target).value)"
+        class="flex-1 bg-transparent outline-none font-body text-sm placeholder:text-muted"
+      />
+    </div>
+  </div>
+
+  <ng-template #nameCell let-user>
+    <div class="flex items-center gap-2.5">
+      <img [src]="user.avatar" class="w-8 h-8 rounded-full object-cover" alt="" />
+      <div class="leading-tight">
+        <p class="font-body text-sm font-medium text-text">{{ user.name }}</p>
+        <p class="font-body text-[11px] text-muted">{{ user.studentId }}</p>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #statusCell let-user>
+    <span
+      [class]="'px-2.5 py-1 rounded-full text-[11px] font-semibold ' + statusClass(user.status)"
+    >
+      {{ user.status }}
+    </span>
+  </ng-template>
+
+  <ng-template #actionsCell let-user>
+    <!-- <app-row-menu [user]="user" (action)="onRowAction($event, user)" /> -->
+    <!-- row-menu.html -->
+    <!-- <div class="relative"> -->
+    <!-- <button
+        (click)="toggle($event)"
+        class="w-8 h-8 rounded-lg hover:bg-background flex items-center justify-center"
+      > -->
+    <app-icon name="eye" />
+    <!-- </button> -->
+
+    <!-- @if (open()) {
+        <div
+          class="absolute right-0 mt-1 w-48 bg-surface border border-border rounded-xl shadow-lg py-1.5 z-10"
+          (click)="$event.stopPropagation()"
+        >
+          <button
+            (click)="select('view', $event)"
+            class="w-full flex items-center gap-2.5 px-3 py-2 text-sm font-body text-text hover:bg-background"
+          >
+            <app-icon name="eye" /> View Details
+          </button>
+          <div class="h-px bg-border my-1"></div>
+          <button
+            (click)="select('deactivate', $event)"
+            class="w-full flex items-center gap-2.5 px-3 py-2 text-sm font-body text-amber hover:bg-amber-light"
+          >
+            <app-icon name="alertCircle" /> Deactivate User
+          </button>
+          <button
+            (click)="select('delete', $event)"
+            class="w-full flex items-center gap-2.5 px-3 py-2 text-sm font-body text-rose hover:bg-rose-light"
+          >
+            <app-icon name="trash" /> Delete User
+          </button>
+        </div>
+      } -->
+    <!-- </div> -->
+  </ng-template>
+
+  <app-table
+    [data]="usersService.users()"
+    [columns]="columns"
+    [globalFilter]="globalFilter()"
+    [cellTemplates]="{
+      name: nameCell,
+      status: statusCell,
+      actions: actionsCell,
+    }"
+  />
+
+  <!-- Pagination -->
+  <div class="flex items-center justify-between px-4 py-3 border-t border-border">
+    <span class="font-body text-xs text-muted">
+      <!-- Showing
+        {{ table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1 }} to
+        {{
+          Math.min(
+            (table.getState().pagination.pageIndex + 1) * table.getState().pagination.pageSize,
+            table.getFilteredRowModel().rows.length
+          )
+        }}
+        of {{ table.getFilteredRowModel().rows.length }} users -->
+    </span>
+    <!-- <div class="flex items-center gap-1.5">
+      <button
+        (click)="table.previousPage()"
+        [disabled]="!table.getCanPreviousPage()"
+        class="w-8 h-8 rounded-lg border border-border flex items-center justify-center disabled:opacity-40"
+      >
+        <app-icon name="chevLeft" />
+      </button>
+      <span class="font-body text-sm px-2">{{ table.getState().pagination.pageIndex + 1 }}</span>
+      <button
+        (click)="table.nextPage()"
+        [disabled]="!table.getCanNextPage()"
+        class="w-8 h-8 rounded-lg border border-border flex items-center justify-center disabled:opacity-40"
+      >
+        <app-icon name="chevRight" />
+      </button>
+    </div> -->
+  </div>
+</div>

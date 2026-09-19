@@ -1,0 +1,34 @@
+<!-- <div class="fixed inset-0 flex items-center justify-center p-4">
+  <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" (click)="openModal.set(false)"></div>
+
+  <section class="relative bg-white rounded-2xl shadow-xl w-full max-w-md p-6 space-y-5">
+    <div class="flex items-center justify-between">
+      <app-text variant="sectionTitle" text="Payment Summary" />
+    </div>
+
+    <ng-content />
+  </section>
+</div> -->
+
+<!-- modal.html -->
+<div class="fixed inset-0 flex items-center justify-center p-4 z-50">
+  <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" (click)="close.emit()"></div>
+
+  <section
+    [class]="'relative bg-surface rounded-2xl shadow-xl w-full p-6 space-y-5 ' + sizeClass()"
+  >
+    @if (title()) {
+      <div class="flex items-center justify-between">
+        <app-text variant="sectionTitle" [text]="title()" />
+        <button
+          (click)="close.emit()"
+          class="w-8 h-8 rounded-lg hover:bg-background flex items-center justify-center"
+        >
+          <app-icon name="xCircle" />
+        </button>
+      </div>
+    }
+
+    <ng-content />
+  </section>
+</div>

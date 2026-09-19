@@ -1,0 +1,313 @@
+<!-- user-detail.html -->
+@if (user(); as u) {
+  <div class="space-y-6">
+    <!-- Header -->
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <a routerLink="/users" class="flex items-center gap-1.5 text-muted hover:text-text">
+          <app-icon name="chevLeft" />
+          <span class="font-body text-sm">Back</span>
+        </a>
+        <app-text variant="pageTitle" text="User Details" />
+      </div>
+      <div class="flex items-center gap-2">
+        <button
+          class="flex items-center gap-2 border border-border rounded-xl px-4 py-2.5 bg-surface"
+        >
+          <app-icon name="edit" />
+          <span class="font-body text-sm text-text">Edit User</span>
+        </button>
+        <!-- <app-row-menu [user]="u" (action)="onHeaderMenuAction($event)" /> -->
+      </div>
+    </div>
+
+    <!-- Profile card -->
+    <div
+      class="bg-surface border border-border rounded-2xl p-5 flex flex-wrap items-center gap-x-8 gap-y-3"
+    >
+      <div class="flex items-center gap-3">
+        <img [src]="u.avatar" class="w-14 h-14 rounded-full object-cover" alt="" />
+        <div>
+          <div class="flex items-center gap-2">
+            <app-text variant="sectionTitle" [text]="u.name" class="text-base" />
+            <span
+              class="px-2 py-0.5 rounded-full bg-green-light text-green text-[11px] font-semibold"
+              >{{ u.status }}</span
+            >
+          </div>
+          <app-text variant="listSubtitle" [text]="u.studentId + ' · Joined ' + u.joined" />
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <app-icon name="mail" />
+        <app-text variant="tableCell" [text]="u.email" />
+      </div>
+      <div class="flex items-center gap-2">
+        <app-icon name="school" />
+        <app-text variant="tableCell" [text]="u.school" />
+      </div>
+      <div class="flex items-center gap-2">
+        <app-icon name="bookOpen" />
+        <app-text variant="tableCell" [text]="u.department" />
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="border-b border-border flex gap-6">
+      @for (tab of tabs; track tab.id) {
+        <button
+          (click)="activeTab.set(tab.id)"
+          [class]="
+            'pb-3 font-body text-sm font-medium border-b-2 -mb-px transition-colors ' +
+            (activeTab() === tab.id
+              ? 'border-primary text-primary'
+              : 'border-transparent text-muted hover:text-text')
+          "
+        >
+          {{ tab.label }}
+        </button>
+      }
+    </div>
+
+    <!-- Overview tab -->
+    @if (activeTab() === 'overview') {
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="bg-surface border border-border rounded-2xl p-5">
+          <app-text variant="cardLabel" text="Account Status" />
+          <app-text variant="chartValue" [text]="u.status" class="text-green mt-1" />
+          <app-text variant="cardText" text="User is active and has full access." class="mt-1" />
+        </div>
+        <div class="bg-surface border border-border rounded-2xl p-5">
+          <app-text variant="cardLabel" text="Last Active" />
+          <app-text variant="chartValue" [text]="u.lastActive" class="mt-1" />
+        </div>
+      </div>
+
+      <div class="bg-surface border border-border rounded-2xl p-5 mt-4">
+        <app-text variant="sectionTitle" text="Quick Actions" />
+        <div class="grid grid-cols-2 gap-3 mt-3">
+          <button
+            class="border border-border rounded-xl py-2.5 text-sm font-body text-text hover:bg-background"
+          >
+            Reset Password
+          </button>
+          <button
+            (click)="activeModal.set('impersonate')"
+            class="border border-border rounded-xl py-2.5 text-sm font-body text-text hover:bg-background"
+          >
+            Impersonate User
+          </button>
+          <button
+            (click)="activeModal.set('deactivate')"
+            class="border border-amber/30 rounded-xl py-2.5 text-sm font-body text-amber hover:bg-amber-light"
+          >
+            Deactivate User
+          </button>
+          <button
+            (click)="activeModal.set('delete')"
+            class="border border-rose/30 rounded-xl py-2.5 text-sm font-body text-rose hover:bg-rose-light"
+          >
+            Delete User
+          </button>
+        </div>
+      </div>
+    }
+
+    <!-- Activity tab -->
+    @if (activeTab() === 'activity') {
+      <div class="bg-surface border border-border rounded-2xl overflow-hidden">
+        <div class="flex items-center justify-between p-4 border-b border-border">
+          <app-text variant="sectionTitle" text="Activity Logs" />
+          <button
+            (click)="activeModal.set('logoutAll')"
+            class="flex items-center gap-2 border border-rose/30 text-rose rounded-xl px-4 py-2 text-sm font-body hover:bg-rose-light"
+          >
+            <app-icon name="logOut" />
+            Log Out All Devices
+          </button>
+        </div>
+
+        <ng-template #actionCell let-log>
+          <div class="flex items-center gap-2">
+            <span [class]="'w-1.5 h-1.5 rounded-full ' + actionDotClass(log.actionColor)"></span>
+            <app-text variant="tableCell" [text]="log.action" />
+          </div>
+        </ng-template>
+
+        <ng-template #detailsCell let-log>
+          <div class="flex items-center gap-2">
+            <button
+              (click)="deviceModalLog.set(log)"
+              class="font-body text-xs text-primary hover:underline"
+            >
+              Device
+            </button>
+            <span class="text-border">·</span>
+            <button
+              (click)="locationModalLog.set(log)"
+              class="font-body text-xs text-primary hover:underline"
+            >
+              Location
+            </button>
+          </div>
+        </ng-template>
+
+        <app-table
+          [data]="logs()"
+          [columns]="logColumns"
+          [cellTemplates]="{ action: actionCell, details: detailsCell }"
+        />
+      </div>
+    }
+
+    @if (
+      activeTab() === 'academic' || activeTab() === 'subscription' || activeTab() === 'security'
+    ) {
+      <div class="bg-surface border border-border rounded-2xl p-8 text-center">
+        <app-text variant="emptyState" text="Nothing here yet." />
+      </div>
+    }
+  </div>
+
+  <!-- Device Details modal -->
+  @if (deviceModalLog(); as log) {
+    <app-modal title="Device Details" size="sm" (close)="deviceModalLog.set(null)">
+      <div class="flex items-center gap-3 pb-4 border-b border-border">
+        <div class="w-10 h-10 rounded-xl bg-background flex items-center justify-center">
+          <app-icon name="smartphone" />
+        </div>
+        <div>
+          <app-text variant="listTitle" [text]="log.device" />
+          <app-text variant="listSubtitle" [text]="log.deviceType" />
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-y-3 pt-4">
+        <div>
+          <app-text variant="cardLabel" text="Browser" />
+          <app-text variant="tableCell" [text]="log.browser" class="font-medium" />
+        </div>
+        <div>
+          <app-text variant="cardLabel" text="Browser Version" />
+          <app-text variant="tableCell" [text]="log.browserVersion" class="font-medium" />
+        </div>
+        <div>
+          <app-text variant="cardLabel" text="OS" />
+          <app-text variant="tableCell" [text]="log.os" class="font-medium" />
+        </div>
+        <div>
+          <app-text variant="cardLabel" text="Screen Resolution" />
+          <app-text variant="tableCell" [text]="log.screenResolution" class="font-medium" />
+        </div>
+        <div>
+          <app-text variant="cardLabel" text="Last Used" />
+          <app-text variant="tableCell" [text]="log.time" class="font-medium" />
+        </div>
+      </div>
+      <button
+        (click)="deviceModalLog.set(null)"
+        class="w-full border border-border rounded-xl py-2.5 text-sm font-body text-text hover:bg-background mt-2"
+      >
+        Close
+      </button>
+    </app-modal>
+  }
+
+  <!-- Location Details modal -->
+  @if (locationModalLog(); as log) {
+    <app-modal title="Location Details" size="sm" (close)="locationModalLog.set(null)">
+      <div class="h-32 rounded-xl bg-background flex items-center justify-center">
+        <app-icon name="mapPin" />
+      </div>
+      <div class="grid grid-cols-2 gap-y-3 pt-2">
+        <div>
+          <app-text variant="cardLabel" text="Location" />
+          <app-text variant="tableCell" [text]="log.location" class="font-medium" />
+        </div>
+        <div>
+          <app-text variant="cardLabel" text="Country" />
+          <app-text variant="tableCell" [text]="log.country" class="font-medium" />
+        </div>
+        <div>
+          <app-text variant="cardLabel" text="Region" />
+          <app-text variant="tableCell" [text]="log.region" class="font-medium" />
+        </div>
+        <div>
+          <app-text variant="cardLabel" text="City" />
+          <app-text variant="tableCell" [text]="log.city" class="font-medium" />
+        </div>
+        <div class="col-span-2">
+          <app-text variant="cardLabel" text="ISP" />
+          <app-text variant="tableCell" [text]="log.isp" class="font-medium" />
+        </div>
+        <div class="col-span-2">
+          <app-text variant="cardLabel" text="IP Address" />
+          <app-text variant="tableCell" [text]="log.ip" class="font-medium" />
+        </div>
+      </div>
+      <button
+        (click)="locationModalLog.set(null)"
+        class="w-full border border-border rounded-xl py-2.5 text-sm font-body text-text hover:bg-background mt-2"
+      >
+        Close
+      </button>
+    </app-modal>
+  }
+
+  <!-- Deactivate / Delete / Impersonate / Log Out All -->
+  @if (activeModal() === 'deactivate') {
+    <app-confirm-modal
+      variant="warning"
+      icon="alertCircle"
+      title="Deactivate User?"
+      description="This user will no longer be able to access their account until reactivated."
+      confirmLabel="Deactivate"
+      [showReasonField]="true"
+      (cancel)="closeModal()"
+      (confirm)="confirmDeactivate()"
+    />
+  }
+  @if (activeModal() === 'delete') {
+    <app-confirm-modal
+      variant="danger"
+      icon="trash"
+      title="Delete User?"
+      description="This action cannot be undone. All user data will be permanently removed from the platform."
+      confirmLabel="Delete User"
+      requireTypedConfirmation="DELETE"
+      (cancel)="closeModal()"
+      (confirm)="confirmDelete()"
+    />
+  }
+  @if (activeModal() === 'impersonate') {
+    <app-confirm-modal
+      variant="info"
+      icon="userPlus"
+      title="Impersonate User?"
+      [description]="
+        'You will be logged in as ' + u.name + '. You can return to admin panel anytime.'
+      "
+      confirmLabel="Impersonate"
+      (cancel)="closeModal()"
+      (confirm)="closeModal()"
+    />
+  }
+  @if (activeModal() === 'logoutAll') {
+    <app-confirm-modal
+      variant="danger"
+      icon="logOut"
+      title="Log Out All Devices?"
+      [description]="
+        'This will log ' +
+        u.name +
+        ' out from all devices and active sessions. This action cannot be undone.'
+      "
+      confirmLabel="Log Out"
+      (cancel)="closeModal()"
+      (confirm)="confirmLogoutAll()"
+    />
+  }
+} @else {
+  <div class="p-8 text-center">
+    <app-text variant="emptyState" text="User not found." />
+  </div>
+}

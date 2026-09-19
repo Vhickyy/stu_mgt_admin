@@ -1,0 +1,135 @@
+<div class="h-screen bg-background flex overflow-hidden">
+  <!-- Mobile overlay -->
+  @if (isMobile() && sidebarOpen()) {
+    <div
+      class="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 md:hidden"
+      (click)="sidebarOpen.set(false)"
+    ></div>
+  }
+
+  <!-- Sidebar -->
+  <aside
+    class="fixed md:relative inset-y-0 left-0 z-50 bg-white border-r border-border transition-all duration-300 ease-in-out flex flex-col h-screen"
+    [class.w-16]="isCollapsed() && !isMobile()"
+    [class.w-64]="!isCollapsed() || isMobile()"
+    [class.-translate-x-full]="isMobile() && !sidebarOpen()"
+    [class.translate-x-0]="!isMobile() || sidebarOpen()"
+  >
+    <!-- Logo -->
+    <div class="h-16 shrink-0 flex items-center justify-between px-4 border-b border-gray-200">
+      <div class="flex items-center gap-3 overflow-hidden">
+        @if (!isCollapsed() || isMobile()) {
+          <img src="student_hub.png" alt="student_hub logo" class="w-[65%]" />
+        } @else {
+          <img src="student_hub_logo.png" alt="student_hub logo" />
+        }
+      </div>
+
+      @if (!isMobile()) {
+        <button
+          (click)="toggleCollapse()"
+          class="w-8 h-8 rounded-lg absolute right-0 top-0 hover:bg-background flex items-center justify-center shrink-0"
+        >
+          <app-icon
+            [name]="isCollapsed() ? 'chevRight' : 'chevLeft'"
+            [size]="18"
+            [strokeWidth]="1.8"
+            class="text-muted"
+          />
+        </button>
+      }
+    </div>
+
+    <!-- Navigation -->
+    <nav class="flex-1 min-h-0 overflow-y-auto px-3 py-4">
+      <div class="space-y-1">
+        @for (item of navItems(); track item.route) {
+          <a
+            [routerLink]="item.route"
+            routerLinkActive="bg-primary-light text-primary border-primary-light"
+            [routerLinkActiveOptions]="{ exact: item.exact }"
+            class="group flex items-center gap-3 px-3 py-2.5 rounded-xl text-muted hover:bg-background hover:text-text transition-all duration-200 border border-transparent"
+            /* [title]="isCollapsed() && !isMobile() ? item.label : ''" */
+          >
+            <div class="w-5 h-5 flex items-center justify-center shrink-0">
+              <app-icon [name]="item.icon" [size]="18" [strokeWidth]="1.8" />
+            </div>
+
+            @if (!isCollapsed() || isMobile()) {
+              <div class="flex items-center justify-between flex-1 min-w-0">
+                <app-text variant="navLabel" [text]="item.label" class="truncate" />
+
+                <!-- @if (item.badge) {
+                  <span
+                    class="px-2 py-0.5 rounded-full bg-purple-100 text-purple-700 text-xs font-medium"
+                  >
+                    {{ item.badge }}
+                  </span>
+                } -->
+              </div>
+            }
+          </a>
+        }
+      </div>
+    </nav>
+
+    <!-- User profile -->
+    <div class="shrink-0 border-t border-gray-200 p-3">
+      <div
+        class="flex items-center gap-3 rounded-xl p-2 hover:bg-background transition-colors cursor-pointer"
+      >
+        <div
+          class="w-10 h-10 rounded-full bg-primary text-primary/700 flex items-center justify-center font-semibold shrink-0"
+        >
+          V
+        </div>
+
+        @if (!isCollapsed() || isMobile()) {
+          <div class="min-w-0 flex-1">
+            <p class="text-sm font-medium text-gray-900 truncate">Victoria</p>
+            <p class="text-xs text-gray-500 truncate">Administrator</p>
+          </div>
+        }
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col min-w-0 h-screen">
+    <!-- Topbar -->
+    <header
+      class="h-16 shrink-0 bg-white border-b border-gray-200 flex items-center justify-between px-4 md:px-6"
+    >
+      <div class="flex items-center gap-3">
+        @if (isMobile()) {
+          <button
+            (click)="sidebarOpen.set(true)"
+            class="w-10 h-10 rounded-xl hover:bg-gray-100 flex items-center justify-center"
+          >
+            ji
+          </button>
+        }
+
+        <div>
+          <h1 class="font-semibold text-gray-900">Dashboard</h1>
+          <p class="text-sm text-gray-500">Welcome back, Victoria</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button class="w-10 h-10 rounded-xl hover:bg-gray-100 flex items-center justify-center">
+          <!-- Bell -->
+        </button>
+
+        <button class="w-10 h-10 rounded-xl hover:bg-gray-100 flex items-center justify-center">
+          <!-- Settings -->
+        </button>
+      </div>
+    </header>
+
+    <!-- Page -->
+    <main class="flex-1 min-h-0 overflow-y-auto p-4 md:p-6">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

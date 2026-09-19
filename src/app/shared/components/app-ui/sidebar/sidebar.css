@@ -1,0 +1,57 @@
+.sidebar {
+  width: 260px;
+  background-color: var(--surface-1);
+  padding-inline: 1rem;
+}
+
+.mat-mdc-list-item {
+  color: var(--text);
+  border-radius: 12px;
+  transition: color 0.2s ease;
+}
+
+.mat-mdc-list-item .mdc-list-item__primary-text {
+  font-size: 14px;
+  color: var(--text);
+}
+
+.mat-mdc-list-item app-icon {
+  color: inherit;
+  fill: currentColor;
+}
+
+.mat-mdc-list-item:hover:not(.active-link) {
+  background-color: var(--hover-soft);
+  border-radius: 12px;
+}
+
+.mat-mdc-list-item.active-link {
+  background-color: var(--primary) !important;
+  box-shadow: var(--active-shadow);
+  border-radius: 12px;
+}
+
+.mat-mdc-list-item.active-link .mdc-list-item__primary-text {
+  color: #fff !important;
+  font-weight: 500;
+}
+
+.mat-mdc-list-item.active-link app-icon {
+  color: #fff !important;
+  fill: #fff !important;
+}
+
+.mat-mdc-list-item.active-link {
+  position: relative;
+}
+
+.mat-mdc-list-item.active-link::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 20%;
+  bottom: 20%;
+  width: 4px;
+  background: var(--accent);
+  border-radius: 4px;
+}

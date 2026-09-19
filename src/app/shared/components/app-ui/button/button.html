@@ -1,0 +1,7 @@
+<button
+  [class]="`text-white bg-primary w-full rounded-xl p-2 cursor-pointer ${class}`"
+  [type]="type()"
+  [disabled]="disabled() || loading()"
+>
+  <app-text variant="body" [text]="text()" class="text-white" />
+</button>

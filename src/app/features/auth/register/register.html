@@ -1,0 +1,54 @@
+<div class="flex flex-col gap-3 mb-8">
+  <img src="student_hub.png" alt="Logo" class="w-40" />
+  <div>
+    <app-text variant="pageTitle" text="Create Admin Account" />
+    <app-text variant="pageSubtitle" text="Join StudentHub as an administrator." />
+  </div>
+</div>
+
+<div class="flex flex-col w-full mb-8 gap-4">
+  <app-input
+    type="text"
+    id="fullName"
+    placeholder="Enter Full Name"
+    [field]="registerForm.fullName"
+    label="Full Name"
+    leftIcon="users"
+  />
+  <app-input
+    type="email"
+    id="email"
+    placeholder="Enter Email Address"
+    [field]="registerForm.email"
+    label="Email Address"
+    leftIcon="mail"
+  />
+  <app-input
+    type="password"
+    id="password"
+    placeholder="Enter Password"
+    [field]="registerForm.password"
+    label="Password"
+    leftIcon="lock"
+    rightIcon="eye"
+  />
+  <app-input
+    type="password"
+    id="confirmPassword"
+    placeholder="Enter Confirm Password"
+    [field]="registerForm.confirmPassword"
+    label="Confirm Password"
+    leftIcon="lock"
+    rightIcon="eye"
+  />
+</div>
+
+<app-button text="Create Account" type="submit" />
+<div class="flex gap-1 mt-2">
+  <app-text text="Have an account?" class="text-sm" />
+  <app-text
+    text="Sign In."
+    routerLink="/auth/sign-in"
+    class="cursor-pointer text-primary text-sm font-semibold"
+  />
+</div>
