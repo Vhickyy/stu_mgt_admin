@@ -10,6 +10,22 @@ export interface User {
   status: 'Active' | 'Inactive' | 'Banned';
   lastActive: string;
 }
+export interface Student {
+  id: string;
+  email: string;
+  isVerifiedEmail: boolean;
+  profile: {
+    id: string;
+    fullName: string;
+    phoneNumber: string;
+    admissionYear: number;
+    university: {
+      name: string;
+    };
+    createdAt: string;
+    updatedAt: string;
+  };
+}
 
 export interface ActivityLog {
   id: string;

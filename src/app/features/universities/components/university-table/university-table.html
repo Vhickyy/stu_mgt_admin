@@ -8,44 +8,45 @@
       <app-icon name="search" />
       <input
         type="text"
-        placeholder="Search users..."
-        [value]="globalFilter()"
-        (input)="globalFilter.set($any($event.target).value)"
+        placeholder="Search university..."
+        [value]="universityService.search()"
+        (input)="universityService.search.set($any($event.target).value)"
         class="flex-1 bg-transparent outline-none font-body text-sm placeholder:text-muted"
       />
     </div>
   </div>
 
-  <ng-template #nameCell let-user>
+  <ng-template #schoolNameCell let-school>
     <div class="flex items-center gap-2.5">
-      @if (user?.avatar) {
-        <img [src]="user?.avatar" class="w-8 h-8 rounded-full object-cover" alt="" />
-      } @else {
-        <div class="bg-primary/10 rounded-full h-10 w-10 grid place-items-center">
-          <app-text [text]="user?.fullName?.[0]" class="text-primary" />
-        </div>
-      }
+      <img
+        [src]="`https://www.google.com/s2/favicons?domain=${school?.university_domains[0]}&sz=128`"
+        class="w-8 h-8 rounded-full object-cover"
+        alt="school-logo"
+      />
+      <app-text [text]="school?.university_name" />
       <div class="leading-tight">
-        <p class="font-body text-sm font-medium text-text">{{ user?.fullName }}</p>
+        <p class="font-body text-sm font-medium text-text">{{ school?.fullName }}</p>
       </div>
     </div>
   </ng-template>
 
-  <ng-template #statusCell let-user>
-    <span
-      [class]="'px-2.5 py-1 rounded-full text-[11px] font-semibold ' + statusClass(user.status)"
-    >
-      {{ user.status }}
-    </span>
+  <ng-template #schoolCountryCell let-school>
+    <div class="flex items-center gap-2.5">
+      <!-- <img
+        [src]="`https://www.google.com/s2/favicons?domain=${school?.university_domains[0]}&sz=128`"
+        class="w-8 h-8 rounded-full object-cover"
+        alt="school-logo"
+      /> -->
+      <app-text [text]="school?.university_country" />
+      <!-- <div class="leading-tight">
+        <p class="font-body text-sm font-medium text-text">{{ school?.fullName }}</p>
+      </div> -->
+    </div>
   </ng-template>
 
-  <ng-template #joinedCell let-user>
-    <span
-      [class]="'px-2.5 py-1 rounded-full text-[11px] font-semibold ' + statusClass(user.status)"
-    >
-      {{ user.createdAt | date: 'MMM dd, yyyy' }}
-    </span>
-  </ng-template>
+  <ng-template #statusCell let-user> </ng-template>
+
+  <ng-template #joinedCell let-user> </ng-template>
 
   <ng-template #actionsCell let-user>
     <!-- <app-row-menu [user]="user" (action)="onRowAction($event, user)" /> -->
@@ -87,14 +88,14 @@
     <!-- </div> -->
   </ng-template>
 
-  @if (usersService.httpStudents.hasValue()) {
+  @if (universityService.universitiesRes.hasValue()) {
     <app-table
-      [data]="usersService.httpStudents.value()"
+      [data]="universityService.universitiesRes.value().universities"
       [columns]="columns"
       [globalFilter]="globalFilter()"
       [cellTemplates]="{
-        name: nameCell,
-        status: statusCell,
+        university_name: schoolNameCell,
+        university_country: schoolCountryCell,
         joined: joinedCell,
         actions: actionsCell,
       }"

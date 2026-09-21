@@ -2,30 +2,32 @@ import { Component, HostListener, inject, signal } from '@angular/core';
 import { Table } from '../../../../shared/components/app-ui/table/table';
 import { Icon } from '../../../../shared/components/app-ui/icon/icon';
 import { ColumnDef } from '@tanstack/angular-table';
-import { User } from '../../../../core/models/users';
+import { Student, User } from '../../../../core/models/users';
 import { UsersService } from '../../users-service';
+import { Text } from '../../../../shared/components/app-ui/text/text';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-user-table',
-  imports: [Table, Icon],
+  imports: [Table, Icon, Text, CommonModule],
   templateUrl: './user-table.html',
   styleUrl: './user-table.css',
 })
 export class UserTable {
   usersService = inject(UsersService);
   globalFilter = signal('');
-  columns: ColumnDef<User>[] = [
+  columns: ColumnDef<Student>[] = [
     {
       accessorKey: 'name',
       header: 'User',
       cell: (info) => info.getValue(),
     },
     { accessorKey: 'email', header: 'Email' },
-    { accessorKey: 'school', header: 'School / University' },
-    { accessorKey: 'department', header: 'Department' },
+    { accessorKey: 'university', header: 'School / University' },
+    // { accessorKey: 'department', header: 'Department' },
     { accessorKey: 'joined', header: 'Joined' },
     { accessorKey: 'status', header: 'Status' },
-    { accessorKey: 'lastActive', header: 'Last Active' },
+    // { accessorKey: 'lastActive', header: 'Last Active' },
     { id: 'actions', header: 'Actions', cell: () => '' },
   ];
 

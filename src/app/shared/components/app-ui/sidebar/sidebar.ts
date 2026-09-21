@@ -49,7 +49,7 @@ export class Sidebar {
     {
       icon: 'building',
       label: 'Schools & Universities',
-      route: '/dashboard/schools',
+      route: '/dashboard/universities',
       exact: false,
     },
     // { icon: 'bookOpen', label: 'Courses', route: '/courses' },

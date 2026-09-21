@@ -14,7 +14,7 @@ export class StatCard {
   icon = input.required<IconName>();
   label = input.required<string>();
   value = input.required<string>();
-  trend = input.required<string>();
+  trend = input<string>();
   color = input<StatColor>('primary');
 
   iconBg() {

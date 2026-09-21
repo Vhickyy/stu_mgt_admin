@@ -26,7 +26,8 @@
   />
 </div>
 
-<app-button text="Login" type="submit" />
+<app-button text="Login" type="submit" (click)="router.navigate(['/dashboard'])" />
+
 <div class="flex justify-between items-center">
   <div class="flex gap-1 mt-2">
     <app-text text="Don't an account?" class="text-sm" />

@@ -1,9 +1,9 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { form } from '@angular/forms/signals';
 import { Text } from '../../../shared/components/app-ui/text/text';
 import { Input } from '../../../shared/components/app-ui/input/input';
 import { Button } from '../../../shared/components/app-ui/button/button';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -18,5 +18,5 @@ export class Login {
   });
 
   loginForm = form(this.loginModel);
-  registerForm: any;
+  router = inject(Router);
 }

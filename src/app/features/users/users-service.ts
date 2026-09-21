@@ -1,8 +1,37 @@
-import { Service, signal } from '@angular/core';
-import { ActivityLog, User } from '../../core/models/users';
+import { inject, OnInit, Service, signal } from '@angular/core';
+import { ActivityLog, User, Student } from '../../core/models/users';
+import { HttpClient, httpResource } from '@angular/common/http';
 
 @Service()
 export class UsersService {
+  //   httpStudents = httpResource(() => 'http://localhost:3000/students');
+
+  // constructor() {
+  //   effect(() => {
+  //     const students = this.httpStudents.value();
+
+  //     if (students) {
+  //       console.log(students);
+  //     }
+  //   });
+  // }
+
+  httpStudents = httpResource<Student[]>(() => 'http://localhost:3001/api/v1/students', {
+    parse(response: any) {
+      console.log(response);
+      return response.data.map((student: Student) => ({
+        id: student.id,
+        email: student.email,
+        fullName: student.profile.fullName,
+        phoneNumber: student.profile.phoneNumber,
+        admissionYear: student.profile.admissionYear,
+        university: student.profile.university.name,
+        status: student.isVerifiedEmail ? 'Verified' : 'Unverified',
+        createdAt: student.profile.createdAt,
+      }));
+    },
+  });
+
   users = signal<User[]>([
     {
       id: '1',

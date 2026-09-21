@@ -1,1 +1,50 @@
-<p>universities works!</p>
+<div class="space-y-6">
+  <!-- Header -->
+  <div>
+    <app-text variant="pageTitle" text="Universities" />
+    <app-text variant="pageSubtitle" text="Manage and monitor all users on StudentHub." />
+  </div>
+
+  @if (universities.hasValue()) {
+    <!-- Stat cards -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      @for (stat of universityService.stats(); track stat.label) {
+        <app-stat-card
+          [icon]="stat.icon"
+          [label]="stat.label"
+          [value]="stat.value"
+          [trend]="stat.trend"
+          [color]="stat.color"
+        />
+      }
+    </div>
+    <app-university-table />
+  }
+</div>
+
+<!-- Modals -->
+<!-- @if (activeModal() === 'deactivate' && activeUser(); as user) {
+  <app-confirm-modal
+    variant="warning"
+    icon="alertCircle"
+    title="Deactivate User?"
+    [description]="'This user will no longer be able to access their account until reactivated.'"
+    confirmLabel="Deactivate"
+    [showReasonField]="true"
+    (cancel)="closeModal()"
+    (confirm)="confirmDeactivate()"
+  />
+}
+
+@if (activeModal() === 'delete' && activeUser(); as user) {
+  <app-confirm-modal
+    variant="danger"
+    icon="trash"
+    title="Delete User?"
+    description="This action cannot be undone. All user data will be permanently removed from the platform."
+    confirmLabel="Delete User"
+    requireTypedConfirmation="DELETE"
+    (cancel)="closeModal()"
+    (confirm)="confirmDelete()"
+  />
+} -->
