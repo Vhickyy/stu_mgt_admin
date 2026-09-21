@@ -1,0 +1,31 @@
+<div class="space-y-4">
+  <!-- Header -->
+  <div>
+    <app-text variant="pageTitle" text="Settings" />
+    <app-text
+      variant="pageSubtitle"
+      text="Manage StudentHub administration, security and platform settings."
+    />
+  </div>
+  <div class="grid grid-cols-3 gap-6">
+    @for (setting of settingsCard; track setting.title) {
+      <div class="bg-white border rounded-xl border-border p-4 flex flex-col gap-8 justify-between">
+        <div class="grid gap-2">
+          <div class="bg-primary-light w-fit rounded-full p-2">
+            <app-icon [name]="setting.icon" class="text-primary" />
+          </div>
+          <app-text [text]="setting.title" variant="cardTitle" />
+          <app-text [text]="setting.sub" variant="cardText" />
+        </div>
+        <div>
+          <app-button
+            [routerLink]="setting.link"
+            [textProps]="{ text: 'Manage', class: 'text-primary' }"
+            btnClass="bg-transparent border border-primary text-primary"
+            [iconProps]="{ name: 'arrowRight' }"
+          />
+        </div>
+      </div>
+    }
+  </div>
+</div>

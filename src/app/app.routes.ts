@@ -48,6 +48,48 @@ export const routes: Routes = [
         ],
       },
       {
+        path: 'admins',
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./features/admins/admins').then((m) => m.Admins),
+          },
+          {
+            path: '',
+            loadComponent: () =>
+              import('./features/admin-request/admin-request').then((m) => m.AdminRequest),
+          },
+        ],
+      },
+      {
+        path: 'settings',
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./features/settings/settings').then((m) => m.Settings),
+          },
+          {
+            path: 'manage-roles',
+            children: [
+              {
+                path: '',
+                loadComponent: () =>
+                  import('./features/roles-permission/roles-permission').then(
+                    (m) => m.RolesPermission,
+                  ),
+              },
+              {
+                path: ':id',
+                loadComponent: () =>
+                  import('./features/roles-permission/roles-permission').then(
+                    (m) => m.RolesPermission,
+                  ),
+              },
+            ],
+          },
+        ],
+      },
+      {
         path: 'universities',
         children: [
           {

@@ -1,0 +1,48 @@
+<div class="space-y-12">
+  <section class="space-y-2">
+    <div
+      class="flex items-center gap-2 text-primary cursor-pointer"
+      routerLink="/dashboard/settings"
+    >
+      <app-icon name="arrowLeft" [size]="15" />
+      <app-text variant="navLabel" text="Back to settings" />
+    </div>
+    <!-- Header -->
+    <div>
+      <app-text variant="pageTitle" text="Roles & Permissions" />
+      <app-text
+        variant="pageSubtitle"
+        text="View and manage roles definition and their associated permissions."
+      />
+    </div>
+  </section>
+
+  @if (rolesService.httpRoles.hasValue()) {
+    <section class="grid grid-cols-3 gap-6">
+      @for (role of rolesService.roles(); track role.id) {
+        <div class="bg-white border border-border flex-col flex justify-between p-4 rounded-xl">
+          <div class="flex justify-between">
+            <div class="flex gap-4">
+              <div class="bg-primary-light p-2 rounded-full w-fit h-fit">
+                <app-icon name="users" class="text-primary" />
+              </div>
+              <div class="grid gap-2 mb-6 w-[85%]">
+                <app-text variant="cardTitle" [text]="role.role_name" />
+                <app-text variant="cardText" [text]="role.role_description" />
+              </div>
+            </div>
+            <div class="flex gap-3">
+              <app-icon name="edit" class="text-primary" [size]="16" />
+              <app-icon name="trash" class="text-error" [size]="16" />
+            </div>
+          </div>
+          <div class="flex gap-2 items-center border-t border-border pt-2">
+            <app-text variant="cardText" [text]="role.adminCount + ' users'" />
+            <div class="h-1 w-1 rounded-full bg-border"></div>
+            <app-text variant="cardText" [text]="role.permissionCount + ' permissions'" />
+          </div>
+        </div>
+      }
+    </section>
+  }
+</div>

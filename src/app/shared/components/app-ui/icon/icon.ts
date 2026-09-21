@@ -25,7 +25,6 @@ import {
   LucideEye,
   LucideEllipsisVertical,
   LucideCircleAlert,
-  LucideTrash,
   LucideSquarePen,
   LucideMail,
   LucideLogOut,
@@ -33,6 +32,8 @@ import {
   LucideMapPin,
   LucideLock,
   LucideArrowLeft,
+  LucideArrowRight,
+  LucideTrash2,
 } from '@lucide/angular';
 
 const ICONS = {
@@ -59,7 +60,7 @@ const ICONS = {
   eye: LucideEye,
   moreVertical: LucideEllipsisVertical,
   alertCircle: LucideCircleAlert,
-  trash: LucideTrash,
+  trash: LucideTrash2,
   edit: LucideSquarePen,
   mail: LucideMail,
   logOut: LucideLogOut,
@@ -67,6 +68,7 @@ const ICONS = {
   mapPin: LucideMapPin,
   lock: LucideLock,
   arrowLeft: LucideArrowLeft,
+  arrowRight: LucideArrowRight,
 } satisfies Record<string, LucideIconInput>;
 
 export type IconName = keyof typeof ICONS;
@@ -83,13 +85,5 @@ export class Icon {
   size = input(20);
   strokeWidth = input(2);
 
-  selectedIcon = computed(() => {
-    if (ICONS[this.name()]) {
-      return ICONS[this.name()];
-    } else {
-      console.log('Help');
-      return ICONS['home']; // default icon
-    }
-  });
-  // selectedIcon = computed(() => ICONS[this.name()]);
+  selectedIcon = computed(() => ICONS[this.name()]);
 }

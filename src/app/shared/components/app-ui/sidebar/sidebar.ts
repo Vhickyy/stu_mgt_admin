@@ -45,6 +45,7 @@ export class Sidebar {
   navItems = signal<NavItem[]>([
     { icon: 'home', label: 'Dashboard', route: '/dashboard', exact: true },
     { icon: 'users', label: 'Users', route: '/dashboard/users', exact: false },
+    { icon: 'users', label: 'Admins', route: '/dashboard/admins', exact: true },
     { icon: 'activity', label: 'User Activity', route: '/dashboard/activity', exact: true },
     {
       icon: 'building',
@@ -56,6 +57,6 @@ export class Sidebar {
     // { icon: 'creditCard', label: 'Subscriptions', route: '/dashboard/subscriptions' },
     { icon: 'chartCol', label: 'Analytics', route: '/dashboard/analytics', exact: true },
     // { icon: 'bell', label: 'Reports', route: '/dashboard/reports' },
-    { icon: 'settings', label: 'Settings', route: '/dashboard/settings', exact: true },
+    { icon: 'settings', label: 'Settings', route: '/dashboard/settings', exact: false },
   ]);
 }

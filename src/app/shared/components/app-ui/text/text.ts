@@ -1,5 +1,6 @@
 import { Component, input } from '@angular/core';
 import { TextVariant } from '../app_types/text_types';
+import { cn } from '../../../utils/cn';
 
 @Component({
   selector: 'app-text',
@@ -8,14 +9,13 @@ import { TextVariant } from '../app_types/text_types';
   styleUrl: './text.css',
 })
 export class Text {
+  cn = cn;
   variant = input<TextVariant>('body');
-  class = input<string>('');
+  class = input<string | undefined>('');
   text = input.required<string>();
 
   classes() {
-    const base = textVariants[this.variant()];
-    const extra = this.class();
-    return extra ? `${base} ${extra}` : base;
+    return cn(textVariants[this.variant()], this.class());
   }
 }
 export const textVariants = {
@@ -36,7 +36,7 @@ export const textVariants = {
   cardValue: 'font-body font-bold text-2xl md:text-3xl leading-none text-text',
   cardLabel: 'font-body text-xs text-muted',
   cardTrend: 'font-body text-[11px] font-medium',
-  cardText: 'font-body text-xs text-muted',
+  cardText: 'font-body text-sm text-muted',
 
   // DASHBOARD TABLES
   tableHeader: 'font-body text-[11px] font-semibold uppercase tracking-wider text-muted',
