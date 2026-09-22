@@ -81,8 +81,8 @@ export const routes: Routes = [
               {
                 path: ':id',
                 loadComponent: () =>
-                  import('./features/roles-permission/roles-permission').then(
-                    (m) => m.RolesPermission,
+                  import('./features/roles-permission/pages/single-role/single-role').then(
+                    (m) => m.SingleRole,
                   ),
               },
             ],

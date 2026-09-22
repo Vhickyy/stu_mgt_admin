@@ -17,10 +17,13 @@
     </div>
   </section>
 
-  @if (rolesService.httpRoles.hasValue()) {
+  @if (rolesService.rolesRes.hasValue()) {
     <section class="grid grid-cols-3 gap-6">
       @for (role of rolesService.roles(); track role.id) {
-        <div class="bg-white border border-border flex-col flex justify-between p-4 rounded-xl">
+        <div
+          class="bg-white border border-border flex-col flex justify-between p-4 rounded-xl"
+          [routerLink]="role.role_id"
+        >
           <div class="flex justify-between">
             <div class="flex gap-4">
               <div class="bg-primary-light p-2 rounded-full w-fit h-fit">
@@ -33,7 +36,9 @@
             </div>
             <div class="flex gap-3">
               <app-icon name="edit" class="text-primary" [size]="16" />
-              <app-icon name="trash" class="text-error" [size]="16" />
+              @if (role.role_name != 'SUPER_ADMIN') {
+                <app-icon name="trash" class="text-error" [size]="16" />
+              }
             </div>
           </div>
           <div class="flex gap-2 items-center border-t border-border pt-2">

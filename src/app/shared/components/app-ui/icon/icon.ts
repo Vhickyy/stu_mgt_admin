@@ -34,6 +34,7 @@ import {
   LucideArrowLeft,
   LucideArrowRight,
   LucideTrash2,
+  LucideShield,
 } from '@lucide/angular';
 
 const ICONS = {
@@ -69,6 +70,7 @@ const ICONS = {
   lock: LucideLock,
   arrowLeft: LucideArrowLeft,
   arrowRight: LucideArrowRight,
+  shield: LucideShield,
 } satisfies Record<string, LucideIconInput>;
 
 export type IconName = keyof typeof ICONS;

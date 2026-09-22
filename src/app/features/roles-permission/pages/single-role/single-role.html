@@ -1,0 +1,92 @@
+<div class="space-y-4">
+  <div
+    class="flex items-center gap-2 text-primary cursor-pointer"
+    routerLink="/dashboard/settings/manage-roles"
+  >
+    <app-icon name="arrowLeft" [size]="15" />
+    <app-text variant="navLabel" text="Back" />
+  </div>
+
+  @if (roleRes.hasValue()) {
+    <div class="flex gap-6">
+      <div class="grid gap-6 flex-1">
+        <section class="bg-white border border-border p-4 rounded-xl">
+          <div class="flex justify-between">
+            <div class="flex gap-4">
+              <div class="bg-primary-light p-2 rounded-lg w-fit h-fit border border-primary">
+                <app-icon name="users" class="text-primary" />
+              </div>
+              <div class="grid gap-2 mb-6 w-[85%]">
+                <app-text variant="cardTitle" [text]="roleRes.value()?.name" />
+                <app-text variant="cardText" [text]="roleRes.value()?.description" />
+              </div>
+            </div>
+            @if (roleRes.value()?.name != 'SUPER_ADMIN') {
+              <div class="flex gap-3 font-semibold">
+                <app-button
+                  btnClass="border border-border bg-transparent text-primary px-4"
+                  [iconProps]="{ name: 'edit' }"
+                  [textProps]="{ text: 'Edit Role', variant: 'cardText', class: 'font-semibold' }"
+                />
+                <app-button
+                  btnClass="border border-error bg-error text-white px-4"
+                  [iconProps]="{ name: 'trash' }"
+                  [textProps]="{
+                    text: 'Delete Role',
+                    variant: 'cardText',
+                    class: 'text-white font-semibold',
+                  }"
+                />
+              </div>
+            }
+          </div>
+          <div class="flex gap-2 items-center border-t border-border pt-2">
+            <app-text variant="cardText" [text]="roleRes.value()?.admins.length + ' admins'" />
+            <div class="h-1 w-1 rounded-full bg-border"></div>
+            <app-text
+              variant="cardText"
+              [text]="roleRes.value()?.permissionsCount + ' permissions'"
+            />
+          </div>
+        </section>
+        <section class="bg-white border border-border p-4 rounded-xl">
+          <app-text variant="cardTitle" text="Permissions" />
+          <div class="grid grid-cols-2 gap-4 mt-6">
+            @for (permission of permissions(); track permissions) {
+              <div class="border border-border rounded-xl flex justify-between items-center p-4">
+                <div class="flex gap-4 items-center">
+                  <div class="bg-primary-light p-2 rounded-full w-fit h-fit">
+                    <app-icon name="users" class="text-primary" />
+                  </div>
+                  <app-text variant="cardText" [text]="permission" />
+                </div>
+                <app-text
+                  [text]="roleRes.value().permissions[permission].length + ' permissions'"
+                  class="bg-primary-light text-primary px-2 py-0.5 rounded-full text-[10px]"
+                />
+              </div>
+            }
+          </div>
+        </section>
+      </div>
+      <div class="w-[35%] bg-white border border-border p-4 rounded-xl">
+        <div class="flex justify-between items-center">
+          <div>
+            <app-text variant="cardTitle" text="Admins with this Role" />
+            <div class="px-3 py-1 rounded-full w-fit bg-primary-light mt-2">
+              <app-text
+                [text]="roleRes.value().admins.length + ' Admins'"
+                class="text-primary text-[11px]"
+              />
+            </div>
+          </div>
+          <app-button
+            btnClass="border border-border bg-transparent text-primary px-4 flex-row-reverse"
+            [iconProps]="{ name: 'plus' }"
+            [textProps]="{ text: 'Add Admin', variant: 'cardText', class: 'font-semibold' }"
+          />
+        </div>
+      </div>
+    </div>
+  }
+</div>
